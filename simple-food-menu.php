@@ -29,7 +29,6 @@ function sfm_register_styles() {
 //CREATE SHORTCODE (FOOTER)
 function sfm_function($type='sfm_function') {
 
-
     // Get current Category
     $get_current_cat = get_term_by('name', single_cat_title('',false), 'simple_food_menu_categories');
     $current_cat = $get_current_cat->term_id;
@@ -64,11 +63,13 @@ function sfm_function($type='sfm_function') {
 
                     <div class="menu-section">
 
-                        <header>
+                        <header class="clearfix">
 
                             <h2>
                                 <?php echo $tax_term->name; // Group name (taxonomy) ?>
                             </h2>
+
+                            <a class="toggle-item-list">Show Items</a>
 
                         </header>
 
@@ -76,14 +77,25 @@ function sfm_function($type='sfm_function') {
 
                             <?php while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
 
-
                                 <div class="menu-item">
 
                                     <div class="menu-item-top cf">
 
                                         <h3><?php the_title(); ?></h3>
 
-                                        <span>$<?php echo the_field('item_cost');?></span>
+                                        <span>
+
+                                            <?php 
+                                            $item_price = get_post_meta( get_the_ID(), 'my_meta_box_text', true );
+                                            // check if the custom field has a value
+                                            if( ! empty( $item_price ) ) {
+                                                echo '<span>$';
+                                                echo $item_price;
+                                                echo '</span>';
+                                            } 
+                                            ?>
+
+                                        </span>
 
                                     </div>
 
@@ -112,10 +124,7 @@ function sfm_function($type='sfm_function') {
 
     } // end if tax_terms
 
-
 }
-
-
 
 
 //CREATE TESTIMONIAL SHORTCODE + POST TYPE
@@ -137,7 +146,7 @@ function sfm_init() {
     register_taxonomy( 'simple_food_menu_categories', 
 
         array('simple_food_menu'),
-        array('hierarchical' => true,
+        array('hierarchical' => true, 
 
             'labels' => array(
                 'name' => __( 'Menu Item Categories', 'bonestheme' ),
@@ -163,6 +172,60 @@ function sfm_init() {
 
         )
     );
+
+    /* metabox bidness */
+
+    add_action( 'add_meta_boxes', 'cd_meta_box_add' );
+
+    function cd_meta_box_add(){
+
+        add_meta_box( 'my-meta-box-id', 'Item Cost', 'cd_meta_box_cb', 'simple_food_menu', 'normal', 'high' );
+
+    }
+
+    function cd_meta_box_cb($post){
+
+
+        global $post;
+        $values = get_post_custom( $post->ID );
+        $text = isset( $values['my_meta_box_text'] ) ? esc_attr( $values['my_meta_box_text'][0] ) : ”;
+        wp_nonce_field( 'my_meta_box_nonce', 'meta_box_nonce' );
+
+        echo '<label for="my_meta_box_text">How much does this item cost?</label>';
+        echo '<input type="text" name="my_meta_box_text" id="my_meta_box_text" />';
+
+    }
+
+
+
+    add_action( 'save_post', 'cd_meta_box_save' );
+    function cd_meta_box_save( $post_id ){
+        // Bail if we're doing an auto save
+        if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+         
+        // if our nonce isn't there, or we can't verify it, bail
+        if( !isset( $_POST['meta_box_nonce'] ) || !wp_verify_nonce( $_POST['meta_box_nonce'], 'my_meta_box_nonce' ) ) return;
+         
+        // if our current user can't edit this post, bail
+        if( !current_user_can( 'edit_post' ) ) return;
+         
+        // now we can actually save the data
+        $allowed = array( 
+            'a' => array( // on allow a tags
+                'href' => array() // and those anchors can only have href attribute
+            )
+        );
+         
+        // Make sure your data is set before trying to save it
+        if( isset( $_POST['my_meta_box_text'] ) )
+            update_post_meta( $post_id, 'my_meta_box_text', wp_kses( $_POST['my_meta_box_text'], $allowed ) );
+             
+    }
+
+
+
+
+
 }
 
 //ADD ALL THE ACTIONS

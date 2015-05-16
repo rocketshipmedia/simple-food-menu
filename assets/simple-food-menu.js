@@ -1,8 +1,8 @@
 jQuery(document).ready(function($){
 
-	$('.menu-section header').click(function(){
-		$(this).parent('div').find('.menu-item').slideToggle(250);
-		$(this).toggleClass('items-visible');
+	$('.menu-section .toggle-item-list').click(function(){
+		$(this).closest('div').find('.menu-item').slideToggle(250);
+		$(this).closest('div').addClass('item-list-visible');
 	})
 
 });

@@ -13,6 +13,14 @@
 	position: relative;
 }
 
+.toggle-item-list{
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	line-height: 0;
+	cursor: pointer
+}
+
 .menu-section header:after{
 	content: '';
 	position: absolute;
@@ -51,8 +59,9 @@
 	margin-bottom: 0;
 }
 
+
 /* js enhancements */
 
 html.js .menu-item{
-	display: none;
+	//display: none;
 }
