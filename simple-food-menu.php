@@ -25,8 +25,10 @@ function sfm_register_styles() {
     }
 }
 
-//CREATE SHORTCODE (FOOTER)
+//CREATE SHORTCODE (MAIN MENU)
 function sfm_function($type='sfm_function') {
+
+    echo '<div class="menu">';
 
     // Get current Category
     $get_current_cat = get_term_by('name', single_cat_title('',false), 'simple_food_menu_categories');
@@ -49,76 +51,72 @@ function sfm_function($type='sfm_function') {
                 'posts_per_page'    => 99,
                 'orderby'           => 'title',
                 'order'             => 'ASC'
-                //'category__in'      => $current_cat // Only posts in current category (category.php)
             );
 
             $my_query = null;
 
             $my_query = new WP_Query($args);
 
-            if( $my_query->have_posts() ) : ?>
 
-                <div class="menu">
+                if( $my_query->have_posts() ) : ?>
 
-                    <div class="menu-section">
+                        <div id="menu-section-<?php echo $tax_term->slug; ?>" class="menu-section">
 
-                        <header class="clearfix">
+                            <header class="clearfix">
 
-                            <h2>
-                                <?php echo $tax_term->name; // Group name (taxonomy) ?>
-                                <a class="toggle-item-list">Show Items</a>
-                            </h2>
+                                <h2>
+                                    <?php echo $tax_term->name; // Group name (taxonomy) ?>
+                                    <a class="toggle-item-list">Show Items</a>
+                                </h2>
 
-                            <span>
-                                <?php echo $tax_term->description; ?>
-                            </span>
+                                <span>
+                                    <?php echo $tax_term->description; ?>
+                                </span>
 
-                        </header>
+                            </header>
 
-                        <div class="menu-item-list">
+                            <div class="menu-item-list">
 
-                            <?php while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
+                                <?php while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
 
-                                <div class="menu-item">
+                                    <div class="menu-item">
 
-                                    <div class="menu-item-top cf">
+                                        <div class="menu-item-top cf">
 
-                                        <h3><?php the_title(); ?></h3>
+                                            <h3><?php the_title(); ?></h3>
 
-                                        <span>
+                                            <span>
 
-                                            <?php 
-                                            $item_price = get_post_meta( get_the_ID(), 'my_meta_box_text', true );
-                                            // check if the custom field has a value
-                                            if( ! empty( $item_price ) ) {
-                                                echo '<span>$';
-                                                echo $item_price;
-                                                echo '</span>';
-                                            } 
-                                            ?>
+                                                <?php 
+                                                $item_price = get_post_meta( get_the_ID(), 'my_meta_box_text', true );
+                                                // check if the custom field has a value
+                                                if( ! empty( $item_price ) ) {
+                                                    echo '<span>$';
+                                                    echo $item_price;
+                                                    echo '</span>';
+                                                } 
+                                                ?>
 
-                                        </span>
+                                            </span>
+
+                                        </div>
+
+                                        <div class="menu-item-desc">
+
+                                            <?php the_content(); ?>
+
+                                        </div>
 
                                     </div>
 
-                                    <div class="menu-item-desc">
 
-                                        <?php the_content(); ?>
+                                <?php endwhile; // end of loop ?>
 
-                                    </div>
-
-                                </div>
-
-
-                            <?php endwhile; // end of loop ?>
+                            </div>
 
                         </div>
 
-                    </div>
-
-                </div>
-
-            <?php endif; // if have_posts()
+                <?php endif; // if have_posts()
 
             wp_reset_query();
 
@@ -126,12 +124,62 @@ function sfm_function($type='sfm_function') {
 
     } // end if tax_terms
 
+    echo '</div>';
+
 }
 
+//CREATE SHORTCODE (MENU LINKS)
+
+function sfm_links($type='sfm_links') {
+
+    echo '<div class="menu-links">';
+
+    // Get current Category
+    $get_current_cat = get_term_by('name', single_cat_title('',false), 'simple_food_menu_categories');
+    $current_cat = $get_current_cat->term_id;
+
+
+    // List posts by the terms for a custom taxonomy of any post type
+    $post_type = 'simple_food_menu';
+
+    $tax = 'simple_food_menu_categories';
+
+    $tax_terms = get_terms( $tax, 'orderby=name&order=ASC');
+
+    if ($tax_terms) {
+
+        foreach ($tax_terms as $tax_term) {
+            $args = array(
+                'post_type'         => $post_type,
+                "$tax"              => $tax_term->slug,
+            );
+
+            $my_query = null;
+
+            $my_query = new WP_Query($args);
+
+                if( $my_query->have_posts() ) : ?>
+
+                    <a href="#menu-section-<?php echo $tax_term->slug; ?>">
+
+                        <?php echo $tax_term->name; // Group name (taxonomy) ?>
+                        
+                    </a>
+
+                <?php endif;
+
+            wp_reset_query();
+
+        }
+
+    }
+
+}
 
 //CREATE TESTIMONIAL SHORTCODE + POST TYPE
 function sfm_init() {
     add_shortcode('show_menu', 'sfm_function');
+    add_shortcode('menu_links', 'sfm_links');
 
     register_post_type('simple_food_menu',
         array(  
