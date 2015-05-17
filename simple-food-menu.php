@@ -174,6 +174,8 @@ function sfm_links($type='sfm_links') {
 
     }
 
+    echo '</div>';
+
 }
 
 //CREATE TESTIMONIAL SHORTCODE + POST TYPE

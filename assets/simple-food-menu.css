@@ -67,8 +67,21 @@
 }
 
 
-/* js enhancements */
+/* js enhancements 
 
 html.js .menu-item{
-	//display: none;
+	display: none;
+}
+
+*/
+
+.menu-links a{
+	display: block;
+	text-decoration: none;
+	border-bottom: 1px solid #eee;
+	padding: 1em;
+}
+
+.menu-links a:last-child{
+	border-bottom: 0;
 }
