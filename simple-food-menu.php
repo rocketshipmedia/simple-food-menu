@@ -188,7 +188,9 @@ function sfm_init() {
             'supports' => array('title', 'editor'), 
             'menu_icon' => 'dashicons-format-quote', 
             'rewrite' => array('slug' => 'food-menu', 'with_front' => false), 
-            'has_archive' => false
+            'has_archive' => false,
+            'publicly_queryable'  => false,
+            'exclude_from_search' => true,
 
         )
     );
@@ -238,14 +240,13 @@ function sfm_init() {
 
         global $post;
         $values = get_post_custom( $post->ID );
-        $text = isset( $values['my_meta_box_text'] ) ? esc_attr( $values['my_meta_box_text'][0] ) : ”;
+        $text = isset( $values['my_meta_box_text'] ) ? esc_attr( $values['my_meta_box_text'][0] ) : '';
         wp_nonce_field( 'my_meta_box_nonce', 'meta_box_nonce' );
 
         echo '<label for="my_meta_box_text">How much does this item cost?</label>';
-        echo '<input type="text" name="my_meta_box_text" id="my_meta_box_text" />';
+        echo '<input type="text" name="my_meta_box_text" value="'.$text.'" id="my_meta_box_text" />';
 
     }
-
 
 
     add_action( 'save_post', 'cd_meta_box_save' );
