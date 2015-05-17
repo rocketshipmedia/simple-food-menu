@@ -6,7 +6,6 @@
   Version: 0.1
 */
 
-
 //REGISTER SCRIPTS
 function sfm_register_scripts() {
     if (!is_admin()) {
@@ -67,9 +66,12 @@ function sfm_function($type='sfm_function') {
 
                             <h2>
                                 <?php echo $tax_term->name; // Group name (taxonomy) ?>
+                                <a class="toggle-item-list">Show Items</a>
                             </h2>
 
-                            <a class="toggle-item-list">Show Items</a>
+                            <span>
+                                <?php echo $tax_term->description; ?>
+                            </span>
 
                         </header>
 
@@ -149,16 +151,16 @@ function sfm_init() {
         array('hierarchical' => true, 
 
             'labels' => array(
-                'name' => __( 'Menu Item Categories', 'bonestheme' ),
+                'name' => __( 'Food Types', 'bonestheme' ),
                 'singular_name' => __( 'Menu Item Category', 'bonestheme' ),
-                'search_items' =>  __( 'Search Menu Item Categories', 'bonestheme' ),
-                'all_items' => __( 'All Menu Item Categories', 'bonestheme' ),
-                'parent_item' => __( 'Parent Menu Item Category', 'bonestheme' ),
-                'parent_item_colon' => __( 'Parent Menu Item Category:', 'bonestheme' ),
-                'edit_item' => __( 'Edit Menu Item Category', 'bonestheme' ),
-                'update_item' => __( 'Update Menu Item Category', 'bonestheme' ),
-                'add_new_item' => __( 'Add New Menu Item Category', 'bonestheme' ),
-                'new_item_name' => __( 'New Custom Menu Item Name', 'bonestheme' )
+                'search_items' =>  __( 'Search Food Types', 'bonestheme' ),
+                'all_items' => __( 'All Food Types', 'bonestheme' ),
+                'parent_item' => __( 'Parent Food Types', 'bonestheme' ),
+                'parent_item_colon' => __( 'Parent Food Type:', 'bonestheme' ),
+                'edit_item' => __( 'Edit Food Type', 'bonestheme' ),
+                'update_item' => __( 'Update Food Type', 'bonestheme' ),
+                'add_new_item' => __( 'Add New Food Type', 'bonestheme' ),
+                'new_item_name' => __( 'New Food Type', 'bonestheme' )
             ),
 
             'show_admin_column' => true, 
@@ -222,7 +224,27 @@ function sfm_init() {
              
     }
 
+    // administration page
 
+    /*
+
+    add_action( 'admin_menu', 'sfm_submenu' );
+
+    function sfm_submenu() {
+        add_submenu_page('edit.php?post_type=simple_food_menu', 'Custom Post Type Admin', 'Settings', 'edit_posts', basename(__FILE__), 'sfm_menu_options');
+    }
+
+    function sfm_menu_options() {
+        if ( !current_user_can( 'manage_options' ) )  {
+            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+        }
+        echo '<div class="wrap">';
+        echo '<h2>Here is where the form would go if I actually had options.</h2>';
+        echo '<p>Lol dicks</p>';
+        echo '</div>';
+    }
+
+    */
 
 
 

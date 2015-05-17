@@ -1,5 +1,5 @@
 .menu{
-	width: 400px;
+	max-width: 400px;
 	margin: 0 auto;
 }
 
@@ -9,16 +9,17 @@
 
 .menu-section header{
 	border-bottom: 1px solid #eee;
-	padding: 10px;
+	padding: 1em;
 	position: relative;
 }
 
 .toggle-item-list{
 	position: absolute;
 	top: 50%;
-	right: 10px;
+	right: 1em;
 	line-height: 0;
-	cursor: pointer
+	cursor: pointer;
+	font-size: 14px;
 }
 
 .menu-section header:after{
@@ -33,11 +34,17 @@
 
 .menu-section h2{
 	margin: 0;
+	position: relative;
 }
 
 .menu-item{
 	border-bottom: 1px solid #eee;
-	padding: 20px 10px;
+	padding: 1em;
+	transition: background .25s ease;
+}
+
+.menu-item:hover{
+	background: #f8f8f8;
 }
 
 .menu-item-top h3{
