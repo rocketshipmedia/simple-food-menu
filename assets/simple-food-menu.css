@@ -1,19 +1,19 @@
-.menu{
+.sfm-container{
 	max-width: 400px;
 	margin: 0 auto;
 }
 
-.menu-section{
+.sfm-menu-section{
 	margin-bottom: 3em;
 }
 
-.menu-section header{
+.sfm-menu-section header{
 	border-bottom: 1px solid #eee;
 	padding: 1em;
 	position: relative;
 }
 
-.toggle-item-list{
+.sfm-toggle-item-list{
 	position: absolute;
 	top: 50%;
 	right: 1em;
@@ -22,7 +22,7 @@
 	font-size: 14px;
 }
 
-.menu-section header:after{
+.sfm-menu-section header:after{
 	content: '';
 	position: absolute;
 	bottom: -5px;
@@ -32,56 +32,56 @@
 	left: 0;
 }
 
-.menu-section h2{
+.sfm-menu-section h2{
 	margin: 0;
 	position: relative;
 }
 
-.menu-item{
+.sfm-menu-item{
 	border-bottom: 1px solid #eee;
 	padding: 1em;
 	transition: background .25s ease;
 }
 
-.menu-item:hover{
+.sfm-menu-item:hover{
 	background: #f8f8f8;
 }
 
-.menu-item-top h3{
+.sfm-menu-item-top h3{
 	float: left;
 	margin: 0;
 }
 
-.menu-item-top span{
+.sfm-menu-item-top span{
 	float: right;
 	text-align: right;
 }
 
-.menu-item-desc{
+.sfm-menu-item-desc{
 	font-size: .85em;
 	font-style: italic;
 }
 
-.menu-item-desc p:last-child{
+.sfm-menu-item-desc p:last-child{
 	margin-bottom: 0;
 }
 
 
 /* js enhancements 
 
-html.js .menu-item{
+html.js .sfm-menu-item{
 	display: none;
 }
 
 */
 
-.menu-links a{
+.sfm-menu-links a{
 	display: block;
 	text-decoration: none;
 	border-bottom: 1px solid #eee;
 	padding: 1em;
 }
 
-.menu-links a:last-child{
+.sfm-menu-links a:last-child{
 	border-bottom: 0;
 }

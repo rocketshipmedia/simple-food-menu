@@ -28,7 +28,7 @@ function sfm_register_styles() {
 //CREATE SHORTCODE (MAIN MENU)
 function sfm_function($type='sfm_function') {
 
-    echo '<div class="menu">';
+    echo '<div class="sfm-container">';
 
     // Get current Category
     $get_current_cat = get_term_by('name', single_cat_title('',false), 'simple_food_menu_categories');
@@ -60,13 +60,13 @@ function sfm_function($type='sfm_function') {
 
                 if( $my_query->have_posts() ) : ?>
 
-                        <div id="menu-section-<?php echo $tax_term->slug; ?>" class="menu-section">
+                        <div id="sfm-section-<?php echo $tax_term->slug; ?>" class="sfm-menu-section">
 
-                            <header class="clearfix">
+                            <header class="sfm-section-header clearfix">
 
                                 <h2>
                                     <?php echo $tax_term->name; // Group name (taxonomy) ?>
-                                    <a class="toggle-item-list">Show Items</a>
+                                    <a class="sfm-toggle-item-list">Show Items</a>
                                 </h2>
 
                                 <span>
@@ -75,13 +75,13 @@ function sfm_function($type='sfm_function') {
 
                             </header>
 
-                            <div class="menu-item-list">
+                            <div class="sfm-item-list">
 
                                 <?php while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
 
-                                    <div class="menu-item">
+                                    <div class="sfm-menu-item">
 
-                                        <div class="menu-item-top cf">
+                                        <div class="sfm-menu-item-top cf">
 
                                             <h3><?php the_title(); ?></h3>
 
@@ -101,7 +101,7 @@ function sfm_function($type='sfm_function') {
 
                                         </div>
 
-                                        <div class="menu-item-desc">
+                                        <div class="sfm-menu-item-desc">
 
                                             <?php the_content(); ?>
 
@@ -132,7 +132,7 @@ function sfm_function($type='sfm_function') {
 
 function sfm_links($type='sfm_links') {
 
-    echo '<div class="menu-links">';
+    echo '<div class="sfm-menu-links">';
 
     // Get current Category
     $get_current_cat = get_term_by('name', single_cat_title('',false), 'simple_food_menu_categories');
@@ -160,7 +160,7 @@ function sfm_links($type='sfm_links') {
 
                 if( $my_query->have_posts() ) : ?>
 
-                    <a href="#menu-section-<?php echo $tax_term->slug; ?>">
+                    <a href="#sfm-section-<?php echo $tax_term->slug; ?>">
 
                         <?php echo $tax_term->name; // Group name (taxonomy) ?>
                         
