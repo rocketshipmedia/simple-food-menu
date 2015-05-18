@@ -185,14 +185,16 @@ function sfm_init() {
 
     register_post_type('simple_food_menu',
         array(  
-            'public' => true, 
+            'public' => false, 
+            'show_ui' => true,
+            'show_in_menu' => true,
+            'has_archive' => false,
+            'publicly_queryable'  => false,
+            'exclude_from_search' => true,
             'label' => 'Food Menu', 
             'supports' => array('title', 'editor'), 
             'menu_icon' => 'dashicons-carrot', 
             'rewrite' => array('slug' => 'food-menu', 'with_front' => false), 
-            'has_archive' => false,
-            'publicly_queryable'  => false,
-            'exclude_from_search' => true,
 
         )
     );
