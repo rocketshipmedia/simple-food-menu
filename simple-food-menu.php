@@ -188,7 +188,7 @@ function sfm_init() {
             'public' => true, 
             'label' => 'Food Menu', 
             'supports' => array('title', 'editor'), 
-            'menu_icon' => 'dashicons-format-quote', 
+            'menu_icon' => 'dashicons-carrot', 
             'rewrite' => array('slug' => 'food-menu', 'with_front' => false), 
             'has_archive' => false,
             'publicly_queryable'  => false,
